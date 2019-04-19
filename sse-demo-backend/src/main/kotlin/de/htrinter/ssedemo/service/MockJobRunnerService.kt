@@ -15,16 +15,18 @@ import kotlin.collections.ArrayList
 class MockJobRunnerService(private var jobDataChannel: SubscribableChannel) {
 
   private val LOG = LoggerFactory.getLogger(MockJobRunnerService::class.java)
-  private val MAX_RUNNING_JOBS = 30
+  private val MAX_RUNNING_JOBS = 6
 
   private val random = Random()
   private val runningJobList = Collections.synchronizedList(ArrayList<JobData>())
+  private var totalJobCount: Long = 0;
 
-  @Scheduled(fixedDelay = 300)
+  @Scheduled(fixedDelay = 200)
   fun updateJobs() {
     // Schedule job if we are running out
     if (runningJobList.size < MAX_RUNNING_JOBS) {
-      val newJobData = JobData(UUID.randomUUID().toString(), "A long running job");
+      totalJobCount++;
+      val newJobData = JobData(UUID.randomUUID().toString(), "Long running job #$totalJobCount");
       runningJobList.add(newJobData)
       LOG.debug("Job added, id=%s".format(newJobData.id))
     }
