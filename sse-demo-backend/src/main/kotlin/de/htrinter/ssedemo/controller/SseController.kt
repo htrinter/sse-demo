@@ -5,6 +5,7 @@ import org.springframework.http.codec.ServerSentEvent
 import org.springframework.messaging.MessageHandler
 import org.springframework.messaging.SubscribableChannel
 import org.springframework.stereotype.Controller
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import reactor.core.publisher.Flux
@@ -27,6 +28,7 @@ class SseController(private var jobDataChannel: SubscribableChannel) {
             }
   }
 
+  @CrossOrigin(origins = ["http://localhost:3000"])
   @GetMapping("/jobstatus")
   fun streamJobStatus(): Flux<ServerSentEvent<JobData>> {
     return Flux.create<ServerSentEvent<JobData>> { sink ->
