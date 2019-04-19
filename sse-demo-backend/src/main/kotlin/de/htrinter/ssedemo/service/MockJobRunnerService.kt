@@ -28,6 +28,7 @@ class MockJobRunnerService(private var jobDataChannel: SubscribableChannel) {
       totalJobCount++;
       val newJobData = JobData(UUID.randomUUID().toString(), "Long running job #$totalJobCount");
       runningJobList.add(newJobData)
+      jobDataChannel.send(GenericMessage(newJobData))
       LOG.debug("Job added, id=%s".format(newJobData.id))
     }
 
@@ -48,7 +49,7 @@ class MockJobRunnerService(private var jobDataChannel: SubscribableChannel) {
       LOG.debug("Job progress incremented, id=%s, completionPercentage=%s".format(jobData.id, jobData.completionPercentage))
     }
 
-    jobDataChannel.send(GenericMessage<JobData>(jobData))
+    jobDataChannel.send(GenericMessage(jobData))
   }
 
 }
