@@ -39,7 +39,7 @@ class MockJobRunnerService(private var jobDataChannel: SubscribableChannel) {
     if (jobData.completionPercentage + completionInc > 100) {
       jobData.completionPercentage = 100
       jobData.status = JobStatus.FINISHED
-      jobData.exitCode = JobExitCode.SUCCESS
+      jobData.exitCode = if (random.nextInt(5) > 1) JobExitCode.SUCCESS else JobExitCode.ERROR;
       runningJobList.removeAt(jobIndex);
       LOG.debug("Job completed, id=%s, exitCode=%s".format(jobData.id, jobData.exitCode))
     } else {
