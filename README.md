@@ -14,6 +14,8 @@ The process:
 3. The reactive sequence implements a message handler with which it subscribes to the job data channel within the backend application. Whenever this channel outputs a new message, the message handler builds a ServerSentEvent and sends it to the client.
 4. The client receives the event and processes it.
 
+**[Live Demo](https://sse-demo.7c8.de/)**
+
 ### Building and running the backend
 
 ```
