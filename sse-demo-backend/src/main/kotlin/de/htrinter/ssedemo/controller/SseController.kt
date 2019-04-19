@@ -34,7 +34,7 @@ class SseController(private var jobDataChannel: SubscribableChannel) {
         val jobData: JobData = message.payload as JobData;
         sink.next(ServerSentEvent.builder<JobData>()
                 .id(jobData.id)
-                .event("job-status")
+                .event("message")
                 .data(jobData)
                 .build())
       }
